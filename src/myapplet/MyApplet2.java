@@ -115,33 +115,32 @@ public class MyApplet2 extends Applet implements Runnable{
           }
           //the lamp
         g.setColor(yellow);
-        g.fillOval(220, 100, 70, 70);
-        //holder
-       
+        g.fillOval(325, 100, 30, 30);
+
+        //holder       
         g.setColor(brown);
-        g.fillRect(240, 200, 30, 100);
-        g.fillRect(240, 300, 200, 20);
+        g.fillRect(330, 160, 20, 70);
+        g.fillRect(330, 230, 200, 20);
         g.setColor(black);
-        g.fillRect(440, 280, 10, 60);
+        g.fillRect(440, 210, 10, 60);
         
         g.setColor(gray);
-        g.fillRect(245, 170, 20, 30);
+        g.fillRect(330, 130, 20, 30);
         //draw lamp body
         g.setColor(black);
-        g.drawLine(150, 50, 100, 200);
-        g.drawLine(350, 50, 400, 200);
-        int j = 3;
+        //g.drawLine(150, 50, 100, 200);
+        //g.drawLine(350, 50, 400, 200);
+        g.drawLine(290, 50, 240, 150);
+        g.drawLine(390, 50, 440, 150);
+        int j = 4;
         int x = 0;
-        for(int i=152;i<350;i+=2)
+        for(int i=292;i<390;i+=2)
         {
             g.setColor(lines);
-            g.drawLine(i, 50, 100 + j, 200);
-            if(x/30 == 1)
-                x = 3;
+            g.drawLine(i, 50,240+ j, 150);
             g.setColor(red);
-            g.drawLine(100 + j, 200 + x, 100 + j, 200);//210
-            j+=3;
-            x+=3;
+            g.drawLine(i , 130 ,240+ j, 150);//210
+            j+=4;
         }
         
       }
@@ -160,22 +159,71 @@ public class MyApplet2 extends Applet implements Runnable{
         int y1[] = { 0, 800, 500, 0};
         g.setColor(brown);
         g.fillPolygon (x1, y1, 4);
+        window(g,on);
       }
       public void HallWay(Graphics g,boolean on)
       {
-         Color light = null;
+         Color light = null,backRoom =null,carpet = null;
         if(on == true)
           {
               light = new Color(220,210,80);
+              backRoom = new Color(70,10,200);
+              carpet = new Color(215,50,50);
           }else
           {
                 light = new Color(100,100,100);
+                backRoom = new Color(70,100,150);
+                carpet = new Color(120,30,30);
           }
         int x2[] = { 450, 0, 200, 200,450};
         int y2[] = { 800, 800, 500, 0,0};
         //lightup
         g.setColor(light);
         g.fillPolygon(x2, y2, 5);
+        int x1[] = { 200, 450, 450, 200};
+        int y1[] = { 300, 300, 320, 320};
+        //backroom line
+        g.setColor(Color.BLACK);
+        g.fillPolygon(x1, y1, 4);
+        
+        int x3[] = { 200, 450,450,200};
+        int y3[] = { 300, 300,0,0};
+        //back room wall
+        g.setColor(backRoom);
+        g.fillPolygon(x3, y3, 4);
+        
+        int x4[] = { 150 , 450, 450,330};
+        int y4[] = { 700 , 700, 400,400};
+        //carpet
+        g.setColor(carpet);
+        g.fillPolygon(x4, y4, 4);
+      }
+      public void window(Graphics g,boolean on)
+      {
+          Color ground = null,sky = null,lines = null;
+        if(on == true)
+          {
+              sky = new Color(60,220,220);
+              ground = new Color(150,170,170);
+              lines = Color.WHITE;
+          }else
+          {
+              sky = new Color(60,220,220);
+              ground = new Color(150,170,170);
+              lines = Color.WHITE;
+          }
+        int x[] = { 30, 150, 150, 30};
+        int y[] = { 430, 300, 200, 300};
+        g.setColor(ground);
+        g.fillPolygon(x, y, 4);
+        int x1[] = { 30, 150, 150, 110, 90, 60 , 30};
+        int y1[] = { 300, 200, 260, 270, 280, 290,360};
+        g.setColor(sky);
+        g.fillPolygon(x1, y1, 7);
+        g.setColor(lines);
+        g.drawLine(70, 300, 110, 290);
+        g.drawLine(60, 330, 110, 320);
+        g.drawLine(60, 310, 110, 310);
       }
     @Override
     public void paint(Graphics g){
