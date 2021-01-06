@@ -1,1 +1,0 @@
-myapplet.MyApplet2
