@@ -12,6 +12,9 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Polygon;
 import java.awt.Toolkit;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,14 +22,71 @@ import java.util.logging.Logger;
  *
  * @author Mohab
  */
-public class MyApplet2 extends Applet implements Runnable{
+public class MyApplet2 extends Applet{
             Image Picture;
-            Thread th;
-            boolean on;
+            boolean on = true,windowon = false;
+            int x = 0,y = 0;
       public void init() {  
          resize(1000, 1000);
-         Picture = getImage(getDocumentBase(),"flower.jfif");
-         th = new Thread(this);
+         //Picture = getImage(getDocumentBase(),"flower.jfif");
+         Picture = getImage(getDocumentBase(),"up.jpg");
+         this.addMouseListener(new MouseListener() {
+             @Override
+             public void mouseClicked(MouseEvent e) {
+                 //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                 
+             }
+
+             @Override
+             public void mousePressed(MouseEvent e) {
+                 //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                 x = e.getX();
+                 y = e.getY();
+                 if((x>=500 && x<=540) && (y>=350 && y<=380))
+                 {
+                     on = true;
+                     windowon =false;
+                 }else if((x>=500 && x<=540) && (y>=380 && y<=410))
+                 {
+                     on = false;
+                     windowon = true;
+                 }
+                 repaint();
+                 System.out.println("("+x+" "+y +")");
+             }
+
+             @Override
+             public void mouseReleased(MouseEvent e) {
+                 //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+             }
+
+             @Override
+             public void mouseEntered(MouseEvent e) {
+                 //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+             }
+
+             @Override
+             public void mouseExited(MouseEvent e) {
+                 //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+             }
+         });
+         Thread th = new Thread(new Runnable(){
+             @Override
+             public void run() {
+                 //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                 while(true)
+                 {
+                     repaint();
+                     try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(MyApplet2.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                     
+                     
+                 }
+             }
+         });
          th.start();
         }
       public void RightWall(Graphics g,boolean on)
@@ -154,6 +214,7 @@ public class MyApplet2 extends Applet implements Runnable{
           {
               brown = new Color(100,80,80);
           }
+        
         //left wall
         int x1[] = { 0, 0, 200, 200};
         int y1[] = { 0, 800, 500, 0};
@@ -164,6 +225,10 @@ public class MyApplet2 extends Applet implements Runnable{
       public void HallWay(Graphics g,boolean on)
       {
          Color light = null,backRoom =null,carpet = null;
+          Random R = new Random();
+          int num = 7;
+          int max = R.nextInt(num);
+          int num2 = R.nextInt(40);
         if(on == true)
           {
               light = new Color(220,210,80);
@@ -197,6 +262,42 @@ public class MyApplet2 extends Applet implements Runnable{
         //carpet
         g.setColor(carpet);
         g.fillPolygon(x4, y4, 4);
+        //Ice Fall
+        if(windowon == true)
+        {
+            
+            g.setColor(Color.WHITE);
+            for(int i=0;i<max;i++)
+            {
+                g.fillOval(40 + (i*20) -5 , 320 -(i*16)-20+num2/2, 5, 5); 
+            }
+            num2 = R.nextInt(num*5);
+            max = max = R.nextInt(num);
+            for(int i=0;i<max;i++)
+            {
+                g.fillOval(40 + (i*20) +num2, 320 -(i*16)+num2/2, 5, 5); 
+            }
+            num2 = R.nextInt(num*5);
+            max = max = R.nextInt(num);
+            for(int i=0;i<max;i++)
+            {
+                g.fillOval(40 + (i*20) -5+num2, 320 -(i*16) +20 +num2/2, 5, 5); 
+            }
+            num2 = R.nextInt(num*5);
+            max = max = R.nextInt(num);
+            for(int i=0;i<max;i++)
+            {
+                g.fillOval(40 + (i*20) +num2, 320 -(i*16)+40 + num2/2, 5, 5);
+            }
+            num2 = R.nextInt(num * 5);
+            max = max = R.nextInt(num);
+            for(int i=0;i<max;i++)
+            {
+                g.fillOval(40 + (i*20) -5 + num2, 320 -(i*16)+60 +num2/2, 5, 5); 
+            }
+            
+            
+        }
       }
       public void window(Graphics g,boolean on)
       {
@@ -212,15 +313,19 @@ public class MyApplet2 extends Applet implements Runnable{
               ground = new Color(150,170,170);
               lines = Color.WHITE;
           }
+        //ground
         int x[] = { 30, 150, 150, 30};
         int y[] = { 430, 300, 200, 300};
         g.setColor(ground);
         g.fillPolygon(x, y, 4);
+        
+        //sky
         int x1[] = { 30, 150, 150, 110, 90, 60 , 30};
         int y1[] = { 300, 200, 260, 270, 280, 290,360};
         g.setColor(sky);
         g.fillPolygon(x1, y1, 7);
         g.setColor(lines);
+        //ice lines
         g.drawLine(70, 300, 110, 290);
         g.drawLine(60, 330, 110, 320);
         g.drawLine(60, 310, 110, 310);
@@ -234,27 +339,5 @@ public class MyApplet2 extends Applet implements Runnable{
         HallWay(g,on);
         Lamp(g,on);
         RightWall(g,on);
-    }
-
-    @Override
-    public void run() {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        
-        while(true)
-        {
-            repaint();
-            if(on == true)
-            {
-                on = false;
-            }else
-            {
-                on = true;
-            }
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(MyApplet2.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
     }
 }
