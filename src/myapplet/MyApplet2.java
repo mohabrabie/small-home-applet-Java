@@ -14,6 +14,7 @@ import java.awt.Polygon;
 import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.time.LocalDateTime;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,6 +27,10 @@ public class MyApplet2 extends Applet{
             Image Picture;
             boolean on = true,windowon = false;
             int x = 0,y = 0;
+            int minuts ;
+            int hours ;
+            int sec ;
+            
       public void init() {  
          resize(1000, 1000);
          //Picture = getImage(getDocumentBase(),"flower.jfif");
@@ -93,7 +98,7 @@ public class MyApplet2 extends Applet{
       {
          Color pink = null,gray = null,black = Color.BLACK;
          Color brown = null,whiteBrown = null;
-         Color yellow = null,red = null;
+         Color yellow = null,red = null,disk1 = null,disk2 = null;
          Color[] state = new Color[2];
         if(on == true)
           {
@@ -103,6 +108,8 @@ public class MyApplet2 extends Applet{
               red = Color.RED;
               state[0] = new Color(220,100,100);
               state[1] = Color.GRAY;
+              disk1 = new Color(60,30,150);
+              disk2 = new Color(120,60,140);
           }else
           {
                 state[0] = Color.GRAY;
@@ -112,6 +119,8 @@ public class MyApplet2 extends Applet{
                 yellow = new Color(200,200,200);
                 gray = new Color(80,80,80);
                 whiteBrown = new Color(160,160,160);
+                disk1 = new Color(50,13,140);
+                disk2 = new Color(70,30,80);
           }
         //draw wall
         g.drawLine(450,800,450,0);
@@ -144,7 +153,32 @@ public class MyApplet2 extends Applet{
         g.setColor(black);
         g.drawString("ON", 510, 370);
         g.drawString("OFF", 510, 400);
+        //drawDisk
         
+        g.setColor(disk1);
+        g.fillRect(470,550,300,20); //first line =======================
+        
+        g.setColor(disk2);
+        g.fillRect(500,570,240,80); //second line
+        g.fillRect(540,650,40,100); //left leg
+        g.fillRect(660,650,40,100); //Right leg
+        //dowar
+        g.setColor(Color.BLACK);
+        g.drawRect(520,590,200,40);
+        g.fillOval(610,600,20,20);
+        
+        //Timer
+        g.fillRect(500,500,170,50);
+        
+        Font f =new Font("Dialog",Font.BOLD,35);
+        g.setFont(f);
+        g.setColor(Color.GREEN);
+        LocalDateTime now = LocalDateTime.now();
+        minuts = now.getMinute();
+        hours = now.getHour();
+        sec = now.getSecond();
+        g.drawString( hours + " : " + minuts + " : " + sec, 510 , 540 );
+
         //draw a picture
         g.setColor(black);
         g.fillRect(500, 100, 200, 200);
@@ -224,7 +258,8 @@ public class MyApplet2 extends Applet{
       }
       public void HallWay(Graphics g,boolean on)
       {
-         Color light = null,backRoom =null,carpet = null;
+         Color light = null,backRoom =null,carpet = null,snow = null;
+         
           Random R = new Random();
           int num = 7;
           int max = R.nextInt(num);
@@ -239,6 +274,7 @@ public class MyApplet2 extends Applet{
                 light = new Color(100,100,100);
                 backRoom = new Color(70,100,150);
                 carpet = new Color(120,30,30);
+                snow = Color.white;
           }
         int x2[] = { 450, 0, 200, 200,450};
         int y2[] = { 800, 800, 500, 0,0};
@@ -266,7 +302,7 @@ public class MyApplet2 extends Applet{
         if(windowon == true)
         {
             
-            g.setColor(Color.WHITE);
+            g.setColor(snow);
             for(int i=0;i<max;i++)
             {
                 g.fillOval(40 + (i*20) -5 , 320 -(i*16)-20+num2/2, 5, 5); 
