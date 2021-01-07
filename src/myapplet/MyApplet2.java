@@ -30,7 +30,7 @@ public class MyApplet2 extends Applet{
             int minuts ;
             int hours ;
             int sec ;
-            
+            boolean onwatch =false;
       public void init() {  
          resize(1000, 1000);
          //Picture = getImage(getDocumentBase(),"flower.jfif");
@@ -82,6 +82,13 @@ public class MyApplet2 extends Applet{
                  while(true)
                  {
                      repaint();
+                     if(onwatch == false)
+                     {
+                         onwatch = true;
+                     }else
+                     {
+                         onwatch =false;
+                        }
                      try {
                         Thread.sleep(1000);
                     } catch (InterruptedException ex) {
@@ -168,17 +175,33 @@ public class MyApplet2 extends Applet{
         g.fillOval(610,600,20,20);
         
         //Timer
-        g.fillRect(500,500,170,50);
+        g.fillRect(500,500,180,50);
         
-        Font f =new Font("Dialog",Font.BOLD,35);
+        Font f =new Font("Dialog",Font.ITALIC,35);
         g.setFont(f);
         g.setColor(Color.GREEN);
         LocalDateTime now = LocalDateTime.now();
         minuts = now.getMinute();
         hours = now.getHour();
         sec = now.getSecond();
-        g.drawString( hours + " : " + minuts + " : " + sec, 510 , 540 );
-
+        String m;
+        if(hours>12)
+        {
+            hours = hours - 12;
+            m = new String("pm");
+        }else
+        {
+            m = new String("am");
+        }
+        g.drawString( hours + "   " + minuts + "  " + m, 510 , 540 );
+        if(onwatch == true)
+        {
+            g.drawString( ":", 540 , 538 );
+        }else
+        {
+            g.drawString( "  ", 540 , 538 );
+        }
+        
         //draw a picture
         g.setColor(black);
         g.fillRect(500, 100, 200, 200);
@@ -276,6 +299,10 @@ public class MyApplet2 extends Applet{
                 carpet = new Color(120,30,30);
                 snow = Color.white;
           }
+        if(18 <= hours && hours >= 6)
+        {
+            snow = new Color(150,150,200);
+        }
         int x2[] = { 450, 0, 200, 200,450};
         int y2[] = { 800, 800, 500, 0,0};
         //lightup
@@ -340,15 +367,21 @@ public class MyApplet2 extends Applet{
           Color ground = null,sky = null,lines = null;
         if(on == true)
           {
-              sky = new Color(60,220,220);
               ground = new Color(150,170,170);
               lines = Color.WHITE;
           }else
           {
-              sky = new Color(60,220,220);
               ground = new Color(150,170,170);
               lines = Color.WHITE;
           }
+        if(18 <= hours && hours >= 6)
+        {
+            sky = new Color(60,220,220);
+        }else
+        {
+            sky = new Color(18,23,84);
+            
+        }
         //ground
         int x[] = { 30, 150, 150, 30};
         int y[] = { 430, 300, 200, 300};
