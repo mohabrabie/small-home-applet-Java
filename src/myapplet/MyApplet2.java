@@ -196,7 +196,7 @@ public class MyApplet2 extends Applet{
         g.drawString( hours + "   " + minuts + "  " + m, 510 , 540 );
         if(onwatch == true)
         {
-            g.drawString( ":", 540 , 538 );
+            g.drawString( " :", 540 , 538 );
         }else
         {
             g.drawString( "  ", 540 , 538 );
